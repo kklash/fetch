@@ -1,8 +1,11 @@
 # Fetch for Go!
 
 
-Inspired by the lightweight `node-fetch` package in Node.js, `fetch` is meant as a light utility for fetching and parsing web pages, especially for JSON based REST API's. Example usage:
+Inspired by the lightweight `node-fetch` package in Node.js, `fetch` is meant as a light utility for fetching and parsing web pages, especially for JSON based REST API's.
 
+Its two primary functions are `GetJson` and `PostJson` which accept and return Json data using https://github.com/bitly/go-simplejson 
+
+Example usage:
 
 ```
 package main
@@ -13,15 +16,18 @@ import (
 )
 
 func main() {
-	resp := fetch.Get("http://ipinfo.io/json")
-	if resp.Error != nil {
-		panic(resp.Error)
+	data, err := fetch.GetJson("http://ipinfo.io/json")
+	if err != nil {
+		panic(err)
 	}
-	json, _ := resp.ToMap()
-	ip := json["ip"].(string)
-	city := json["city"].(string)
+
+	ip, _ := data.Get("ip").String()
+
+	city, _ := data.Get("city").String()
+
 	fmt.Printf("IP: %s\nLocation: %s\n", ip, city)
 // => IP: 93.115.86.8
 //    Location: Bucharest
 }
+
 ```

@@ -9,9 +9,10 @@ import (
 	json "github.com/bitly/go-simplejson"
 )
 
+var HttpClient *http.Client = http.DefaultClient
 
 func Get(url string) ([]byte, error) {
-	resp, err := http.Get(url)
+	resp, err := HttpClient.Get(url)
 	if err != nil {
 		return nil, err
 	}

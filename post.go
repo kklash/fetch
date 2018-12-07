@@ -14,7 +14,7 @@ const JSON_CONTENT_TYPE = "application/json"
 
 func Post(url string, postData []byte) ([]byte, error) {
 	contentType := http.DetectContentType(postData)
-	resp, err := http.Post(url, contentType, bytes.NewReader(postData))
+	resp, err := HttpClient.Post(url, contentType, bytes.NewReader(postData))
 	if err != nil {
 		return nil, err
 	}
